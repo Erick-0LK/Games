@@ -3,17 +3,19 @@ class Grid():
     def __init__(self):
         
         self.positions = [[" " for x in range(3)] for y in range(3)]
+        self.colored_positions = [[" " for x in range(3)] for y in range(3)]
 
     def showGrid(self):
-
-        print("\n   |   |   ")
-        print(" {} | {} | {} ".format(self.positions[0][0], self.positions[0][1], self.positions[0][2]))
+                
+        print()
+        print("   |   |   ")
+        print(" {} | {} | {} ".format(self.colored_positions[0][0], self.colored_positions[0][1], self.colored_positions[0][2]))
         print("___|___|___")
         print("   |   |   ")
-        print(" {} | {} | {} ".format(self.positions[1][0], self.positions[1][1], self.positions[1][2]))
+        print(" {} | {} | {} ".format(self.colored_positions[1][0], self.colored_positions[1][1], self.colored_positions[1][2]))
         print("___|___|___")
         print("   |   |   ")
-        print(" {} | {} | {} ".format(self.positions[2][0], self.positions[2][1], self.positions[2][2]))
+        print(" {} | {} | {} ".format(self.colored_positions[2][0], self.colored_positions[2][1], self.colored_positions[2][2]))
         print("   |   |   ")
         
     def checkWinner(self, symbols):

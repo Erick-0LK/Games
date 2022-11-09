@@ -1,8 +1,9 @@
 from Classes import *
 from Functions import *
-import os
+from termcolor import colored
+from os import system
 
-os.system('cls')
+system('cls')
 end_application = False
 
 while end_application is False:
@@ -11,7 +12,7 @@ while end_application is False:
     displayTitle()
     symbols = getSymbols()
     grid = Grid()
-    os.system('cls')
+    system('cls')
 
     while True:
 
@@ -29,7 +30,7 @@ while end_application is False:
             if grid.checkWinner(symbols) != "Tie": break
             
             turns += 1
-            os.system('cls')
+            system('cls')
 
         else:
 
@@ -43,21 +44,21 @@ while end_application is False:
             if grid.checkWinner(symbols) != "Tie": break
 
             turns += 1
-            os.system('cls')
+            system('cls')
             
-    os.system('cls')
+    system('cls')
     displayTitle()
     grid.showGrid()
     winner = grid.checkWinner(symbols)
     
     if winner == "Player":
         
-        text = "\nCongratulations! You won."
+        text = colored("\nCongratulations! You won.", "blue")
         print(text)
             
     elif winner == "Enemy":
             
-        text = "\nYou lost! Better luck next time."
+        text = colored("\nYou lost! Better luck next time.", "red")
         print(text)
             
     else:
@@ -66,6 +67,6 @@ while end_application is False:
         print(text)
         
     end_application = playAgain(text, grid)
-    os.system('cls')
+    system('cls')
     
 print("The application has ended. Thanks for playing!")

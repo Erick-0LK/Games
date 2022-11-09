@@ -1,9 +1,11 @@
 from Classes import *
-import os, random
+from termcolor import colored
+from os import system
+from random import randint
 
 def displayTitle():
     
-    print("= Tic-Tac-Toe ==================================")
+    print(colored("= Tic-Tac-Toe ==================================", attrs = ["bold"]))
 
 def getSymbols():
 
@@ -11,7 +13,7 @@ def getSymbols():
 
     if player_symbol != "X" and player_symbol != "O":
 
-        os.system('cls')
+        system('cls')
         displayTitle()
         print("\nInvalid symbol. Please try again.")
 
@@ -29,7 +31,7 @@ def playerTurn(symbols, grid):
 
         if len(move) != 3 or move[1] != ",":
 
-            os.system('cls')
+            system('cls')
             displayTitle()
             grid.showGrid()
             print("\nInvalid coordinates. Please try again.")
@@ -42,7 +44,7 @@ def playerTurn(symbols, grid):
 
         if grid.positions[x][y] != " ":
 
-            os.system('cls')
+            system('cls')
             displayTitle()
             grid.showGrid()
             print("\nInvalid coordinates. Please try again.")
@@ -50,10 +52,11 @@ def playerTurn(symbols, grid):
             return playerTurn(symbols, grid)
 
         grid.positions[x][y] = symbols[0]
+        grid.colored_positions[x][y] = colored(symbols[0], "blue")
 
     except (IndexError, ValueError):
 
-        os.system('cls')
+        system('cls')
         displayTitle()
         grid.showGrid()
         print("\nInvalid coordinates. Please try again.")
@@ -62,14 +65,15 @@ def playerTurn(symbols, grid):
 
 def enemyTurn(symbols, grid):
 
-    x = random.randint(0, 2)
-    y = random.randint(0, 2)
+    x = randint(0, 2)
+    y = randint(0, 2)
 
     if grid.positions[x][y] != " ":
 
         return enemyTurn(symbols, grid)
 
     grid.positions[x][y] = symbols[1]
+    grid.colored_positions[x][y] = colored(symbols[1], "red")
     
 def playAgain(text, grid):
     
@@ -77,7 +81,7 @@ def playAgain(text, grid):
     
     if play_again != "Y" and play_again != "N":
         
-        os.system('cls')
+        system('cls')
         displayTitle()
         grid.showGrid()
         print(text + "\n\nInvalid reply. Please try again.")
