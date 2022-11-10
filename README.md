@@ -11,6 +11,6 @@ The game tic-tac-toe is pretty much self-explanatory as nearly all of us played 
 </p>
 
 ### Screenshots:
-
-![001](https://user-images.githubusercontent.com/93747847/201154510-29b2b72d-fd25-4209-8e82-f46ace50f59d.PNG) ![002](https://user-images.githubusercontent.com/93747847/201154523-0367abaa-4bad-4a06-a9b6-e256f5016e77.PNG)
-![003](https://user-images.githubusercontent.com/93747847/201154531-b2c00e6d-8517-40d0-8c37-7eac55d64626.PNG) ![004](https://user-images.githubusercontent.com/93747847/201163064-19c8e489-f06f-4d7f-8a5c-1500e7b0fcb2.PNG)
+<p align = "center">
+<img src = "Screenshots/001A.PNG"> <img src = "Screenshots/002A.PNG"> <img src = "Screenshots/003A.PNG"> <img src = "Screenshots/004A.PNG">
+</p>
