@@ -21,27 +21,35 @@ while end_application is False:
         if symbols[0] == "X":
 
             grid.showGrid()
-            playerTurn(symbols, grid)
+            grid.playerTurn(symbols)
 
-            if turns == 4 or grid.checkWinner(symbols) != "Tie": break
+            if turns == 4 or grid.checkWinner(symbols) != "Tie":
+                
+                break
 
-            enemyTurn(symbols, grid)
+            grid.enemyTurn(symbols)
             
-            if grid.checkWinner(symbols) != "Tie": break
+            if grid.checkWinner(symbols) != "Tie":
+                
+                break
             
             turns += 1
             system('cls')
 
         else:
 
-            enemyTurn(symbols, grid)
+            grid.enemyTurn(symbols)
             grid.showGrid()
             
-            if turns == 4 or grid.checkWinner(symbols) != "Tie": break
+            if turns == 4 or grid.checkWinner(symbols) != "Tie":
+                
+                break
 
-            playerTurn(symbols, grid)
+            grid.playerTurn(symbols)
             
-            if grid.checkWinner(symbols) != "Tie": break
+            if grid.checkWinner(symbols) != "Tie":
+                
+                break
 
             turns += 1
             system('cls')

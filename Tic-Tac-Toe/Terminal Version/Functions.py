@@ -1,7 +1,6 @@
 from Classes import *
-from termcolor import colored
 from os import system
-from random import randint
+from termcolor import colored
 
 def displayTitle():
     
@@ -22,58 +21,6 @@ def getSymbols():
     enemy_symbol = "X" if player_symbol == "O" else "O"
         
     return [player_symbol, enemy_symbol]
-
-def playerTurn(symbols, grid):
-
-    move = input("\nInput the coordinates (x,y) to make a move: ")
-
-    try:
-
-        if len(move) != 3 or move[1] != ",":
-
-            system('cls')
-            displayTitle()
-            grid.showGrid()
-            print("\nInvalid coordinates. Please try again.")
-
-            return playerTurn(symbols, grid)
-
-        move = move.split(",")
-        x = int(move[0]) - 1
-        y = int(move[1]) - 1
-
-        if grid.positions[x][y] != " ":
-
-            system('cls')
-            displayTitle()
-            grid.showGrid()
-            print("\nInvalid coordinates. Please try again.")
-
-            return playerTurn(symbols, grid)
-
-        grid.positions[x][y] = symbols[0]
-        grid.colored_positions[x][y] = colored(symbols[0], "blue")
-
-    except (IndexError, ValueError):
-
-        system('cls')
-        displayTitle()
-        grid.showGrid()
-        print("\nInvalid coordinates. Please try again.")
-
-        return playerTurn(symbols, grid)
-
-def enemyTurn(symbols, grid):
-
-    x = randint(0, 2)
-    y = randint(0, 2)
-
-    if grid.positions[x][y] != " ":
-
-        return enemyTurn(symbols, grid)
-
-    grid.positions[x][y] = symbols[1]
-    grid.colored_positions[x][y] = colored(symbols[1], "red")
     
 def playAgain(text, grid):
     
