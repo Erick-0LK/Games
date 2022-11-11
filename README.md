@@ -12,7 +12,7 @@ The game Tic-Tac-Toe is pretty much self-explanatory as nearly all of us played 
 
 ### Terminal Version Screenshots:
 <p align = "center">
-<img src = "Screenshots/001A.PNG"> <img src = "Screenshots/002A.PNG"> <img src = "Screenshots/003A.PNG"> <img src = "Screenshots/004A.PNG">
+
 </p>
 
 ## Battleships :ship:
