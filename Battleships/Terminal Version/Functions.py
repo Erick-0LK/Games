@@ -5,8 +5,16 @@ from os import system
 def displayTitle():
 
     print(colored("= Battleships ===============================================================================\n", attrs = ["bold"]))
+    
+def errorMessage(map, previous_move):
+    
+    system('cls')
+    displayTitle()
+    map.showMap()
+    print("Invalid coordinates. Please try again.\n")
+    return map.playerMove(previous_move)
 
-def playAgain(text, map):
+def playAgain(map, text):
     
     play_again = input("\nDo you want to play again? Yes or no? (Y/N): ")
     
@@ -17,6 +25,6 @@ def playAgain(text, map):
         map.showMap()
         print(text + "\n\nInvalid reply. Please try again.")
         
-        return playAgain(text, map)
+        return playAgain(map, text)
     
     return False if play_again == "Y" else True

@@ -13,7 +13,7 @@ class Map:
         self.enemies = 5
         self.positions = [[0 for x in range(self.y)] for y in range(self.x)]
         self.enemy_positions = [[0 for x in range(self.y)] for y in range(self.x)]
-        self.map = {0 : "X", 1 : colored("O", "green"), 2 : colored("*", "red"), 3 : colored("X", attrs = ["bold"])}
+        self.map = {0 : "X", 1 : colored("O", "green"), 2 : colored("*", "red"), 3 : colored("X", "yellow")}
         self.setEnemyPositions()
 
     def showMap(self):
@@ -70,9 +70,12 @@ class Map:
 
     def playerMove(self, previous_move):
         
-        x = abs(int(previous_move[1]) - self.x)
-        y = int(previous_move[0]) - 1
-        self.getClosestEnemy(x, y, previous_move)
+        if previous_move is not False:
+        
+            x = abs(int(previous_move[1]) - self.x)
+            y = int(previous_move[0]) - 1
+            self.getClosestEnemy(x, y, previous_move)
+            
         new_move = input("Input the coordiantes in the format (x,y) to attack: ")
         
         if new_move == "Cheat":
@@ -82,18 +85,18 @@ class Map:
         
         try:
         
-            new_move = new_move.split(",")
+            new_move = new_move.split(",", 1)
         
             if not 1 <= int(new_move[0]) <= self.y or not 1 <= int(new_move[1]) <= self.x:
 
-                return self.errorMessage(previous_move)
+                return errorMessage(self, previous_move)
 
             x = abs(int(new_move[1]) - self.x)
             y = int(new_move[0]) - 1
             
             if self.positions[x][y] == 1 or self.positions[x][y] == 2:
 
-                return self.errorMessage(previous_move)
+                return errorMessage(self, previous_move)
             
             if self.enemy_positions[x][y] == 1:
 
@@ -111,7 +114,7 @@ class Map:
 
         except (ValueError):
 
-            return self.errorMessage(previous_move)    
+            return errorMessage(self, previous_move)
 
     def getClosestEnemy(self, x, y, move):
 
@@ -127,11 +130,11 @@ class Map:
                     
         if closest == 1:
             
-            print("The nearest enemy is within {} space of position [{}][{}]\n".format(closest, move[0], move[1]))
+            print("The nearest enemy to position [{}][{}] is {} space away.\n".format(move[0], move[1], closest))
                     
         else:
             
-            print("The nearest enemy is within {} spaces of position [{}][{}]\n".format(closest, move[0], move[1]))
+            print("The nearest enemy to position [{}][{}] is {} spaces away.\n".format(move[0], move[1], closest))
             
     def revealEnemyPostions(self):
         
@@ -142,11 +145,3 @@ class Map:
                 if self.enemy_positions[i][j] == 1:
                     
                     self.positions[i][j] = 3
-                    
-    def errorMessage(self, previous_move):
-        
-        system('cls')
-        displayTitle()
-        self.showMap()
-        print("Invalid coordinates. Please try again.\n")
-        return self.playerMove(previous_move)

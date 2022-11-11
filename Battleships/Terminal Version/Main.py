@@ -7,7 +7,7 @@ end_applicationn = False
 
 while end_applicationn is False:
 
-    move = [1, 1]
+    move = False
     map = Map()
     
     while map.tries != 0 and map.enemies != 0:
@@ -31,7 +31,7 @@ while end_applicationn is False:
         text = colored("You lost! Better luck next time.", "red")
         print(text)
         
-    end_applicationn = playAgain(text, map)
+    end_applicationn = playAgain(map, text)
     
 system('cls')
 print("The application has ended. Thanks for playing.")
