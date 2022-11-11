@@ -18,7 +18,7 @@ The game Tic-Tac-Toe is pretty much self-explanatory as nearly all of us played 
 ## Battleships :ship:
 
 <p align="justify">
-The game Battleships works with a 10x5 map in which each tile may contain a hidden enemy. Once the player makes a correct move, a hint will be given: the game tells how many spaces away the nearest enemy is to the last valid position chosen. The game ends when either the player runs out of tries or all enemies are wiped out.
+The game Battleships works with a 10x5 map in which each tile may contain a hidden enemy. Once the player makes a correct move, a hint will be given: the game tells how many spaces away the nearest enemy is to the last valid position chosen. The game ends when either the player runs out of tries or all enemies are wiped out. Moreover, the player can activate a cheat which will reveal the enemy positions.
 </p>
 
 ### Terminal Version Screenshots:
