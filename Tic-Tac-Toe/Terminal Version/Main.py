@@ -74,7 +74,7 @@ while end_application is False:
         text = "\nIt is a tie!"
         print(text)
         
-    end_application = playAgain(text, grid)
+    end_application = playAgain(grid, text)
     system('cls')
     
 print("The application has ended. Thanks for playing!")

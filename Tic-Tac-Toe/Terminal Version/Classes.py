@@ -2,7 +2,7 @@ from Functions import *
 from os import system
 from random import randint
 
-class Grid():
+class Grid:
 
     def __init__(self):
         
@@ -10,58 +10,59 @@ class Grid():
         self.colored_positions = [[" " for x in range(3)] for y in range(3)]
 
     def showGrid(self):
-                
+        
         print()
-        print("   |   |   ")
-        print(" {} | {} | {}  \u2191".format(self.colored_positions[0][0], self.colored_positions[0][1], self.colored_positions[0][2]))
-        print("___|___|___")
-        print("   |   |   ")
-        print(" {} | {} | {}  y".format(self.colored_positions[1][0], self.colored_positions[1][1], self.colored_positions[1][2]))
-        print("___|___|___")
-        print("   |   |    ")
-        print(" {} | {} | {}  \u2191".format(self.colored_positions[2][0], self.colored_positions[2][1], self.colored_positions[2][2]))
-        print("   |   |   ")
-        print("\n \u2192   x   \u2192 ")
+        
+        for x in range(3):
+            
+            print("   |   |    ||")
+            
+            for y in range(3):
+                
+                print(" {} ".format(self.colored_positions[x][y]), end = "")
+                print("|", end = "") if y != 2 else print(" || ", end = "")
+                
+            match x:
+                
+                case 0:
+                    
+                    print("The x axis is horizontal : [1,3]")
+                    
+                case 1:
+                    
+                    print("The y axis is vertical : [1,3]")
+                    
+                case 2:
+                    
+                    print(colored("Player: Blue Symbols", "blue"),"-",colored("Enemy: Red Symbols", "red"))
+                
+            print("___|___|___ ||") if x != 2 else print("   |   |    ||")
         
     def playerTurn(self, symbols):
 
         move = input("\nInput the coordinates (x,y) to make a move: ")
 
         try:
+            
+            move = move.split(",", 1)
 
-            if len(move) != 3 or move[1] != "," or move[0] == "0" or move[2] == "0":
+            if not 1 <= int(move[0]) <= 3 or not 1 <= int(move[1]) <= 3:
 
-                system('cls')
-                displayTitle()
-                self.showGrid()
-                print("\nInvalid coordinates. Please try again.")
-
-                return self.playerTurn(symbols)
-
-            move = move.split(",")
+                return errorMessage(self, symbols)
+            
             y = int(move[0]) - 1
             x = abs(int(move[1]) - 3)
 
             if self.positions[x][y] != " ":
 
-                system('cls')
-                displayTitle()
-                self.showGrid()
-                print("\nInvalid coordinates. Please try again.")
-
-                return self.playerTurn(symbols)
+                return errorMessage(self, symbols)
 
             self.positions[x][y] = symbols[0]
             self.colored_positions[x][y] = colored(symbols[0], "blue")
 
-        except (IndexError, ValueError):
+        except (ValueError):
 
-            system('cls')
-            displayTitle()
-            self.showGrid()
-            print("\nInvalid coordinates. Please try again.")
-
-            return self.playerTurn(symbols)
+            return errorMessage(self, symbols)
 
     def enemyTurn(self, symbols):
 
@@ -79,9 +80,9 @@ class Grid():
         
         winner = ""
         
-        for x in range(0, 3):
+        for x in range(3):
             
-            for y in range(0, 3):
+            for y in range(3):
                 
                 winner += self.positions[x][y]
             
@@ -91,9 +92,9 @@ class Grid():
             
             winner = ""
             
-        for y in range(0, 3):
+        for y in range(3):
             
-            for x in range(0, 3):
+            for x in range(3):
                 
                 winner += self.positions[x][y]
                 
@@ -103,7 +104,7 @@ class Grid():
             
             winner = ""
             
-        for x, y in zip(range(0, 3), range(0, 3)):
+        for x, y in zip(range(3), range(3)):
             
             winner += self.positions[x][y]
             
@@ -113,7 +114,7 @@ class Grid():
         
         winner = ""
         
-        for x, y, in zip(range(0, 3), range(2, -1, -1)):
+        for x, y, in zip(range(3), range(2, -1, -1)):
             
             winner += self.positions[x][y]
         

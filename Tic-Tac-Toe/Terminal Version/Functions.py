@@ -4,7 +4,7 @@ from termcolor import colored
 
 def displayTitle():
     
-    print(colored("= Tic-Tac-Toe ==================================", attrs = ["bold"]))
+    print(colored("= Tic-Tac-Toe ==========================================", attrs = ["bold"]))
 
 def getSymbols():
 
@@ -15,14 +15,20 @@ def getSymbols():
         system('cls')
         displayTitle()
         print("\nInvalid symbol. Please try again.")
-
         return getSymbols()
 
     enemy_symbol = "X" if player_symbol == "O" else "O"
-        
     return [player_symbol, enemy_symbol]
+
+def errorMessage(grid, symbols):
     
-def playAgain(text, grid):
+    system('cls')
+    displayTitle()
+    grid.showGrid()
+    print("\nInvalid coordinates. Please try again.")
+    return grid.playerTurn(symbols)
+    
+def playAgain(grid, text):
     
     play_again = input("\nDo you want to play again? Yes or no? (Y/N): ")
     
@@ -32,7 +38,6 @@ def playAgain(text, grid):
         displayTitle()
         grid.showGrid()
         print(text + "\n\nInvalid reply. Please try again.")
-        
-        return playAgain(text, grid)
+        return playAgain(grid, text)
     
     return False if play_again == "Y" else True
