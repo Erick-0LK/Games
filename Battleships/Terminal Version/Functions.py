@@ -4,7 +4,7 @@ from os import system
 
 def displayTitle():
 
-    print(colored("= Battleships ==================================================\n", attrs = ["bold"]))
+    print(colored("= Battleships ===============================================================================\n", attrs = ["bold"]))
 
 def playAgain(text, map):
     

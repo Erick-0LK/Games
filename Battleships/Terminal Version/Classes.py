@@ -3,58 +3,56 @@ from termcolor import colored
 from os import system
 from random import randint
 
-class Map():
+class Map:
 
     def __init__(self):
 
-        self.positions = [[0 for x in range(5)] for y in range(5)]
-        self.enemy_positions = [[0 for x in range(5)] for y in range(5)]
-        self.tries = 10
+        self.x = 5
+        self.y = 10
+        self.tries = 15
         self.enemies = 5
-        self.cheat = False
+        self.positions = [[0 for x in range(self.y)] for y in range(self.x)]
+        self.enemy_positions = [[0 for x in range(self.y)] for y in range(self.x)]
+        self.map = {0 : "X", 1 : colored("O", "green"), 2 : colored("*", "red"), 3 : colored("X", attrs = ["bold"])}
         self.setEnemyPositions()
 
     def showMap(self):
 
-        map = {0 : "X", 1 : colored("O", "green"), 2 : colored("*", "red")}
-
         print("Number of enemies left: {}".format(self.enemies))
         print("Number of tries left: {}\n".format(self.tries))
-
-        for x in range(5):
+        
+        for x in range(self.x):
             
-            if x != 4:
+            print("   |   |   |   |   |   |   |   |   |    ||")
             
-                print("\u2191", end = " ")
+            for y in range(self.y):
                 
-            else:
-                
-                print("y", end = " ")
-
-            for y in range(5):
-
-                print(map[self.positions[x][y]] + " ", end = "")
-                
+                print(" {} ".format(self.map[self.positions[x][y]]), end = "")                         
+                print("|", end = "") if y != self.y - 1 else print(" || ", end = "")
                 
             match x:
                 
                 case 0:
                     
-                    print()
-                
+                    print("The x axis is horizontal : [1,10]")
+                    
                 case 1:
                     
-                    print(" | X : Unused coordinates.")
-                    
+                    print("The y axis is vertical : [1,5]")
+                
                 case 2:
                     
-                    print(" |", colored("O", "green"), ": Used coordinates which held an enemy.")
+                    print("X : Unused coordinates.")
                     
                 case 3:
                     
-                    print(" |", colored("*", "red"), ": Used coordinates which did not hold an enemy.")
-                        
-        print("\n>>> x >>>\n")
+                    print(colored("O", "green"), ": Used coordinates which held an enemy.")
+                    
+                case 4:
+                    
+                    print(colored("*", "red"), ": Used coordinates which did not hold an enemy.")
+                
+            print("___|___|___|___|___|___|___|___|___|___ ||") if x != self.x - 1 else print("   |   |   |   |   |   |   |   |   |    ||\n")
 
     def setEnemyPositions(self):
 
@@ -62,8 +60,8 @@ class Map():
 
         while counter != 5:
 
-            x = randint(0, 4)
-            y = randint(0, 4)
+            x = randint(0, self.x - 1)
+            y = randint(0, self.y - 1)
 
             if self.enemy_positions[x][y] == 0:
 
@@ -72,41 +70,31 @@ class Map():
 
     def playerMove(self, previous_move):
         
-        x = abs(int(previous_move[1]) - 5)
+        x = abs(int(previous_move[1]) - self.x)
         y = int(previous_move[0]) - 1
         self.getClosestEnemy(x, y, previous_move)
         new_move = input("Input the coordiantes in the format (x,y) to attack: ")
         
         if new_move == "Cheat":
             
-            self.showEnemyPositions()
-            
-            return self.playerMove(previous_move)
-            
+            self.revealEnemyPostions()
+            return previous_move
+        
         try:
-
-            if len(new_move) != 3 or not (1 <= int(new_move[0]) <= 5) or new_move[1] != "," or not (1 <= int(new_move[2]) <= 5):
-
-                system('cls')
-                displayTitle()
-                self.showMap()
-                print("Invalid coordinates. Please try again.\n")
-
-                return self.playerMove(previous_move)
-
+        
             new_move = new_move.split(",")
-            x = abs(int(new_move[1]) - 5)
+        
+            if not 1 <= int(new_move[0]) <= self.y or not 1 <= int(new_move[1]) <= self.x:
+
+                return self.errorMessage(previous_move)
+
+            x = abs(int(new_move[1]) - self.x)
             y = int(new_move[0]) - 1
+            
+            if self.positions[x][y] == 1 or self.positions[x][y] == 2:
 
-            if self.positions[x][y] != 0:
-
-                system('cls')
-                displayTitle()
-                self.showMap()
-                print("Invalid coordinates. Please try again.\n")
-
-                return self.playerMove(previous_move)
-
+                return self.errorMessage(previous_move)
+            
             if self.enemy_positions[x][y] == 1:
 
                 self.positions[x][y] = 1
@@ -116,28 +104,22 @@ class Map():
             elif self.enemy_positions != 1:
 
                 self.positions[x][y] = 2
-
-            self.tries -= 1
+                
+            self.tries -= 1    
             self.getClosestEnemy(x, y, new_move)
-            
             return new_move
 
-        except (IndexError, ValueError):
+        except (ValueError):
 
-            system('cls')
-            displayTitle()
-            self.showMap()
-            print("Invalid coordinates. Please try again.\n")
-
-            return self.playerMove(previous_move)
+            return self.errorMessage(previous_move)    
 
     def getClosestEnemy(self, x, y, move):
 
         closest = 5
 
-        for i in range(5):
+        for i in range(self.x):
 
-            for j in range(5):
+            for j in range(self.y):
                 
                 if self.enemy_positions[i][j] == 1 and abs(i - x) + abs(j - y) < closest:
                     
@@ -150,17 +132,21 @@ class Map():
         else:
             
             print("The nearest enemy is within {} spaces of position [{}][{}]\n".format(closest, move[0], move[1]))
-    
-    def showEnemyPositions(self):
-        
-        print("\nThe remaining enemy postions are:\n")
-        
-        for x in range(5):
             
-            for y in range(5):
+    def revealEnemyPostions(self):
+        
+        for i in range(self.x):
+
+            for j in range(self.y):
                 
-                if self.enemy_positions[x][y] == 1:
+                if self.enemy_positions[i][j] == 1:
                     
-                    print("[{}][{}]".format(x + 1, y + 1), end = " ")
+                    self.positions[i][j] = 3
                     
-        print("\n")
+    def errorMessage(self, previous_move):
+        
+        system('cls')
+        displayTitle()
+        self.showMap()
+        print("Invalid coordinates. Please try again.\n")
+        return self.playerMove(previous_move)
