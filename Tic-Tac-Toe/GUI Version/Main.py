@@ -6,16 +6,19 @@ class GUI:
     def __init__(self):
         
         self.window = Tk()
+        self.window.configure(bg = "black")
         icon = PhotoImage(file = "Icon.png")
         self.window.iconphoto(False, icon)
         self.window.title("Tic-Tac-Toe Game")
         self.window.geometry("300x350")
         
-        self.top_frame = Frame(self.window)
-        self.top_label = Label(self.top_frame, text = "Choose your symbol")
-        self.button_X = Button(self.top_frame, text = "X", command = lambda : self.startGame("X"))
-        self.button_O = Button(self.top_frame, text = "O", command = lambda : self.startGame("O"))
-        self.top_label.pack(side = LEFT)
+        self.top_frame = Frame(self.window, bg = "black")
+        self.top_labelA = Label(self.top_frame, text = "Choose your symbol: ", background = "black", fg = "white", font = "bold")
+        self.top_labelB = Label(self.top_frame, bg = "black")
+        self.top_labelC = Label(self.top_frame, bg = "black", font = "bold")
+        self.button_X = Button(self.top_frame, text = "X", bg = "black", font = "bold", fg = "white", borderwidth = 0, command = lambda : self.startGame("X"))
+        self.button_O = Button(self.top_frame, text = "O", bg = "black", font = "bold", fg = "white", borderwidth = 0, command = lambda : self.startGame("O"))
+        self.top_labelA.pack(side = LEFT)
         self.button_X.pack(side = LEFT)
         self.button_O.pack(side = LEFT)
         self.top_frame.pack()
@@ -32,25 +35,37 @@ class GUI:
                 self.positions[row][column] = Button(self.middle_frame,
                                                      state = "disabled",
                                                      text = self.positions[row][column],
+                                                     bg = "white", fg = "black", font = "bold",
                                                      width = 10, height = 4,
                                                      command = lambda row = row, column = column : self.playerTurn(row, column))
                 self.positions[row][column].grid(row = row, column = column)
                 
         self.middle_frame.pack()
         
-        self.bottom_frame = Frame(self.window)
-        self.bottom_label = Label(self.bottom_frame)
-        self.button_yes = Button(self.bottom_frame, text = "Yes", command = lambda : self.restartGame())
-        self.button_no = Button(self.bottom_frame, text = "No", command = lambda : self.endMessage())
+        self.bottom_frame = Frame(self.window, bg = "black")
+        self.bottom_labelA = Label(self.bottom_frame, bg = "black", fg = "white")
+        self.bottom_labelB = Label(self.bottom_frame, bg = "black", fg = "white")
+        self.button_yes = Button(self.bottom_frame, text = "Yes", bg = "black", borderwidth = 0, fg = "white", command = lambda : self.restartGame())
+        self.button_no = Button(self.bottom_frame, text = "No", bg = "black", borderwidth = 0, fg = "white", command = lambda : self.endMessage())
+        
+        self.bottom_labelB.config(text = "Do you want to play again?")
+        self.bottom_labelA.pack(side = LEFT)
+        self.bottom_labelB.pack(side = LEFT)
+        self.button_yes.pack(side = LEFT)
+        self.button_no.pack(side = LEFT)
         
         self.window.mainloop()
          
     def startGame(self, player_symbol):
         
-        self.symbols = ["X", "O"] if player_symbol == "X" else ["O", "X"]
-        self.top_label.config(text = "Player Symbol: {} | Enemy Symbol: {}".format(self.symbols[0], self.symbols[1]))
         self.button_X.pack_forget()
         self.button_O.pack_forget()
+        self.symbols = ["X", "O"] if player_symbol == "X" else ["O", "X"]
+        self.top_labelA.config(text = "Player Symbol: {}".format(self.symbols[0]), fg = "#00FFFF")
+        self.top_labelB.config(text = " | ", bg = "black", fg = "white")
+        self.top_labelC.config(text = "Enemy Symbol: {}".format(self.symbols[1]), fg = "#FF6A6A")
+        self.top_labelB.pack(side = LEFT)
+        self.top_labelC.pack(side = LEFT)
         
         for row in range(3):
             
@@ -65,6 +80,7 @@ class GUI:
     def playerTurn(self, row, column):
         
         self.positions[row][column]["text"] = self.symbols[0]
+        self.positions[row][column]["bg"] = "#00FFFF"
         self.positions[row][column]["state"] = "disabled"
         self.turns += 1
         
@@ -83,6 +99,7 @@ class GUI:
             column = randint(0, 2)
     
         self.positions[row][column]["text"] = self.symbols[1]
+        self.positions[row][column]["bg"] = "#FF6A6A"
         self.positions[row][column]["state"] = "disabled"
         self.turns += 1
         
@@ -128,45 +145,41 @@ class GUI:
             
             case " ":
                 
-                self.bottom_label.config(text = "It is a tie! Do you want to play again?")
+                self.bottom_labelA.config(text = "It is a tie!", fg = "white")
                 
             case "X":
                 
-                self.bottom_label.config(text = "You won! Do you want to play again?") if self.symbols[0] == "X" else self.bottom_label.config(text = "You lost! Do you want to play again?")
+                self.bottom_labelA.config(text = "You won!", fg = "#00FFFF") if self.symbols[0] == "X" else self.bottom_labelA.config(text = "You lost!", fg = "#FF6A6A")
                 
             case "O":
                 
-                self.bottom_label.config(text = "You won! Do you want to play again?") if self.symbols[0] == "O" else self.bottom_label.config(text = "You lost! Do you want to play again?")
-        
-        self.bottom_label.pack(side = LEFT)
-        self.button_yes.pack(side = LEFT)
-        self.button_no.pack(side = LEFT)
+                self.bottom_labelA.config(text = "You won!", fg = "#00FFFF") if self.symbols[0] == "O" else self.bottom_labelA.config(text = "You lost!", fg = "#FF6A6A")
+
         self.bottom_frame.pack()
         
     def endMessage(self):
         
-        self.bottom_label.config(text = "Thank you for playing!")
+        self.bottom_labelA.config(text = "Thank you for playing!", fg = "white")
+        self.bottom_labelB.pack_forget()
         self.button_yes.pack_forget()
         self.button_no.pack_forget()
         
     def restartGame(self):
         
-        self.top_label.config(text = "Choose your symbol")
         self.bottom_frame.pack_forget()
+        self.top_labelB.pack_forget()
+        self.top_labelC.pack_forget()
+        self.top_labelA.config(text = "Choose your symbol", fg = "white")
         self.button_X.pack(side = LEFT)
         self.button_O.pack(side = LEFT)
-        self.positions = [[" " for row in range(3)] for column in range(3)]
         self.turns = 0
         
         for row in range(3):
             
             for column in range(3):
                 
-                self.positions[row][column] = Button(self.middle_frame,
-                                                     state = "disabled",
-                                                     text = self.positions[row][column],
-                                                     width = 10, height = 4,
-                                                     command = lambda row = row, column = column : self.playerTurn(row, column))
-                self.positions[row][column].grid(row = row, column = column)
+                self.positions[row][column]["state"] = "disabled"
+                self.positions[row][column]["text"] = " "
+                self.positions[row][column]["bg"] = "white"
 
 window = GUI()
