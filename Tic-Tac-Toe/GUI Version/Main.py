@@ -10,7 +10,7 @@ class GUI:
         icon = PhotoImage(file = "Icon.png")
         self.window.iconphoto(False, icon)
         self.window.title("Tic-Tac-Toe Game")
-        self.window.geometry("300x350")
+        self.window.geometry("300x310")
         
         self.top_frame = Frame(self.window, bg = "black")
         self.top_labelA = Label(self.top_frame, text = "Choose your symbol: ", background = "black", fg = "white", font = "bold")
