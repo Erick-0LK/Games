@@ -111,7 +111,7 @@ class GUI:
             
         else:
             
-            self.labelB.config(text = "Too lost! Better luck next time! Do you want to play again?")
+            self.labelB.config(text = "You lost! Better luck next time! Do you want to play again?")
             self.button_yes.place(x = 440, y = 282)
             self.button_no.place(x = 480, y = 282)       
             
