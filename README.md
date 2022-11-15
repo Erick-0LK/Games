@@ -37,3 +37,9 @@ The game Battleships works with a 10x5 map in which each tile may contain a hidd
 <img src = "Screenshots/005A.PNG"> <img src = "Screenshots/006A.PNG"> <img src = "Screenshots/007A.PNG"> <img src = "Screenshots/008A.PNG">
 </p>
 
+### GUI Version Screenshots:
+
+<p align = "center">
+<img src = "Screenshots/005B.PNG"> <img src = "Screenshots/006B.PNG"> <img src = "Screenshots/007B.PNG"> <img src = "Screenshots/008B.PNG">
+</p>
+
