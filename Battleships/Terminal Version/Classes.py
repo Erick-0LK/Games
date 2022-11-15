@@ -118,7 +118,7 @@ class Map:
 
     def getClosestEnemy(self, x, y, move):
 
-        closest = 5
+        closest = 100
 
         for i in range(self.x):
 
